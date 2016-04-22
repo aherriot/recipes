@@ -7,7 +7,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   devtool: 'eval-source-map',
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+    'webpack-hot-middleware/client?reload=false',
     path.join(__dirname, 'client/index.js')
   ],
   output: {
@@ -40,5 +40,8 @@ module.exports = {
       test: /\.css$/,
       loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]'
     }]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   }
 };

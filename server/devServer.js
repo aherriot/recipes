@@ -25,9 +25,9 @@ const middleware = webpackMiddleware(compiler, {
   }
 });
 
-app.use('/api', api);``
 app.use(middleware);
 app.use(webpackHotMiddleware(compiler));
+app.use('/api', api);
 
 app.get('*', function response(req, res) {
   res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
