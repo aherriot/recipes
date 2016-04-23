@@ -15,6 +15,7 @@ const compiler = webpack(webpackConfig);
 const middleware = webpackMiddleware(compiler, {
   publicPath: webpackConfig.output.publicPath,
   contentBase: 'src',
+  hot: true,
   stats: {
     colors: true,
     hash: false,

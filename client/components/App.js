@@ -26,3 +26,7 @@ export default class App extends Component {
 App.propTypes = {
   children: React.PropTypes.element
 };
+
+if (module.hot) {
+  module.hot.accept();
+}

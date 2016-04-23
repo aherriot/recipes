@@ -13,14 +13,14 @@ export default class App extends Component {
       authSection = (
         <div>
           <span>{this.props.auth.username}</span>
-          <a href="#" onClick={this.onLogout}>Logout!!</a>
+          <a href="#" onClick={this.onLogout}>Logout!</a>
         </div>
       );
     } else {
       authSection = (
         <div>
           <Link to="/login">Login</Link>
-          <Link to="/createAccount">Create Account</Link>
+          <Link to="/createAccount">Create Account!</Link>
         </div>
       );
     }
