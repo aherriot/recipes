@@ -1,5 +1,8 @@
 import actionTypes from '../constants/actionTypes';
-import { checkHttpStatus, parseJSON, getHeaders } from '../utils';
+import { checkHttpStatus, parseJSON, getHeaders, request } from '../utils';
+import { push } from 'react-router-redux';
+import { logoutAndRedirect }  from './auth';
+
 
 function fetchRecipesPending() {
   return {
@@ -24,18 +27,18 @@ function fetchRecipesError(error) {
 export function fetchRecipes() {
   return function(dispatch) {
     dispatch(fetchRecipesPending());
-    return fetch('/api/recipes', {
-      method: 'GET',
-      headers: getHeaders(),
-    })
-    .then(checkHttpStatus)
-    .then(parseJSON)
-    .then(response => {
-      dispatch(fetchRecipesSuccess(response));
-    })
-    .catch(error => {
-      dispatch(fetchRecipesError(error));
-    })
+
+    return request('/recipes')
+      .then(response => {
+        dispatch(fetchRecipesSuccess(response));
+      })
+      .catch(error => {
+        if(error.message === 'Unauthorized') {
+          dispatch(logoutAndRedirect());
+        } else {
+          dispatch(fetchRecipesError(error));
+        }
+      })
   }
 }
 
@@ -62,12 +65,7 @@ function fetchRecipeError(error) {
 export function fetchRecipe(recipe_id) {
   return function(dispatch) {
     dispatch(fetchRecipePending());
-    return fetch('/api/recipes/' + recipe_id, {
-      method: 'GET',
-      headers: getHeaders(),
-    })
-    .then(checkHttpStatus)
-    .then(parseJSON)
+    return request('/recipes/' + recipe_id)
     .then(response => {
       dispatch(fetchRecipeSuccess(response));
     })
@@ -98,18 +96,83 @@ function addRecipeError(error) {
 export function addRecipe(title, description) {
   return function(dispatch) {
     dispatch(addRecipePending());
-    return fetch('/api/recipes', {
-      method: 'post',
-      headers: getHeaders(),
-      body: JSON.stringify({title: title, description: description})
+
+    return request('/recipes', 'POST', {
+      title: title,
+      description: description
     })
-    .then(checkHttpStatus)
-    .then(parseJSON)
     .then(response => {
       dispatch(addRecipeSuccess(response));
+      dispatch(push('/recipes'));
     })
     .catch(error => {
         dispatch(addRecipeFailure(error));
     })
   }
 }
+
+function editRecipePending() {
+  return {
+    type: actionTypes.EDIT_RECIPE_PENDING
+  };
+}
+
+function editRecipeSuccess() {
+  return {
+    type: actionTypes.EDIT_RECIPE_SUCCESS
+  };
+}
+
+function editRecipeError(error) {
+  return {
+    type: actionTypes.EDIT_RECIPE_ERROR,
+    payload: error
+  };
+}
+
+export function editRecipe(recipe_id, title, description) {
+  return function(dispatch) {
+    dispatch(editRecipePending());
+    request('/recipes/'+recipe_id, 'PUT', {title, description})
+    .then(response => {
+      dispatch(editRecipeSuccess());
+      dispatch(push('/recipes'));
+    })
+    .catch(error => {
+        dispatch(editRecipeError(error));
+    })
+  }
+};
+
+function deleteRecipePending() {
+  return {
+    type: actionTypes.DELETE_RECIPE_PENDING
+  };
+}
+
+function deleteRecipeSuccess() {
+  return {
+    type: actionTypes.DELETE_RECIPE_SUCCESS
+  };
+}
+
+function deleteRecipeError(error) {
+  return {
+    type: actionTypes.DELETE_RECIPE_ERROR,
+    payload: error
+  };
+}
+
+export function deleteRecipe(recipe_id) {
+  return function(dispatch) {
+    dispatch(deleteRecipePending());
+    request('/recipes/'+recipe_id, 'DELETE')
+    .then(response => {
+      dispatch(deleteRecipeSuccess());
+      dispatch(push('/recipes'));
+    })
+    .catch(error => {
+        dispatch(deleteRecipeError(error));
+    })
+  }
+};

@@ -2,7 +2,7 @@ import { push } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
 
 import actionTypes from '../constants/actionTypes';
-import { checkHttpStatus, parseJSON } from '../utils';
+import { checkHttpStatus, parseJSON, request } from '../utils';
 
 
 export function loginSuccess(user) {
@@ -83,68 +83,46 @@ export function logoutAndRedirect(redirect = '/login') {
     }
 }
 
-export function login(username, password, redirect="/") {
+export function login(username, password, redirect="/recipes") {
     return function(dispatch) {
         dispatch(loginPending());
-        return fetch('/api/login', {
-            method: 'post',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-                body: JSON.stringify({username: username, password: password})
-            })
-            .then(checkHttpStatus)
-            .then(parseJSON)
-            .then(response => {
-                try {
-                    dispatch(loginSuccess(response));
-                    dispatch(push(redirect));
-                } catch (e) {
-                    dispatch(loginError({
-                        response: {
-                            status: 403,
-                            statusText: 'Invalid token'
-                        }
-                    }));
-                }
-            })
-            .catch(error => {
-                dispatch(loginError(error));
-            })
+
+        return request('/login', 'POST', {
+          username: username,
+          password: password
+        })
+        .then(response => {
+          dispatch(loginSuccess(response));
+          dispatch(push(redirect));
+        })
+        .catch(error => {
+          dispatch(loginError(error));
+        })
     }
 }
 
 export function createAccount(username, password, redirect="/") {
     return function(dispatch) {
         dispatch(createAccountPending());
-        return fetch('/api/users', {
-            method: 'post',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-                body: JSON.stringify({username: username, password: password})
-            })
-            .then(checkHttpStatus)
-            .then(parseJSON)
-            .then(response => {
-                try {
-                    dispatch(createAccountSuccess(response.token));
-                    dispatch(push(redirect));
-                } catch (e) {
-                    dispatch(createAccountFailure({
-                        response: {
-                            status: 403,
-                            statusText: 'Invalid token'
-                        }
-                    }));
-                }
-            })
-            .catch(error => {
-                dispatch(createAccountFailure(error));
-            })
+        return request('/users', 'POST', {
+          username: username,
+          password: password
+        })
+        .then(response => {
+            try {
+                dispatch(createAccountSuccess(response.token));
+                dispatch(push(redirect));
+            } catch (e) {
+                dispatch(createAccountFailure({
+                    response: {
+                        status: 403,
+                        statusText: 'Invalid token'
+                    }
+                }));
+            }
+        })
+        .catch(error => {
+            dispatch(createAccountFailure(error));
+        })
     }
 }

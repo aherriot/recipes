@@ -1,27 +1,19 @@
 import React, {Component} from 'react';
 
-export default class Login extends Component {
+import RecipeForm from './RecipeForm';
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    this.props.actions.addRecipe(this.refs.title.value, this.refs.description.value);
+export default class NewRecipe extends Component {
+
+  onSubmit = (title, description) => {
+
+    this.props.actions.addRecipe(title, description);
   }
 
   render() {
     return (
       <div>
         <h2>New Recipe</h2>
-        <form onSubmit={this.onSubmit}>
-          <label htmlFor="title">Title</label>
-          <br />
-          <input id="title" type="text" ref="title"></input>
-          <br />
-          <label htmlFor="description">Description</label>
-          <br />
-          <textarea id="description" ref="description"></textarea>
-          <br />
-          <input type="submit" value="Save"></input>
-        </form>
+        <RecipeForm onSubmit={this.onSubmit} />
       </div>
     );
   }

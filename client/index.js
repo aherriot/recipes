@@ -11,9 +11,11 @@ import NoMatch from './components/NoMatch';
 import DevTools from './components/DevTools';
 import LoginContainer from './containers/LoginContainer';
 import CreateAccountContainer from './containers/CreateAccountContainer';
-import RecipesContainer from './containers/RecipesContainer';
-import RecipeContainer from './containers/RecipeContainer';
-import NewRecipeContainer from './containers/NewRecipeContainer';
+import ListRecipesContainer from './containers/recipes/ListRecipesContainer';
+import RecipeContainer from './containers/recipes/RecipeContainer';
+import NewRecipeContainer from './containers/recipes/NewRecipeContainer';
+import EditRecipeContainer from './containers/recipes/EditRecipeContainer';
+
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -26,8 +28,9 @@ ReactDOM.render(
           <Route path="/login" component={LoginContainer} />
           <Route path="/createAccount" component={CreateAccountContainer} />
 
-          <Route path="/recipes" component={RecipesContainer} />
+          <Route path="/recipes" component={ListRecipesContainer} />
           <Route path="/recipes/new" component={NewRecipeContainer} />
+          <Route path="/recipes/:recipe_id/edit" component={EditRecipeContainer} />
           <Route path="/recipes/:recipe_id" component={RecipeContainer} />
 
           <Route path="*" component={NoMatch}/>

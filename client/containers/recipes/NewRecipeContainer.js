@@ -1,8 +1,8 @@
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import Recipe from '../components/recipes/Recipe';
-import {fetchRecipe} from '../actions/recipes';
+import NewRecipe from '../../components/recipes/NewRecipe';
+import {addRecipe} from '../../actions/recipes';
 
 function mapStateToProps(state) {
   return {recipes: state.recipes};
@@ -10,11 +10,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({fetchRecipe}, dispatch)
+    actions: bindActionCreators({addRecipe}, dispatch)
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Recipe);
+)(NewRecipe);

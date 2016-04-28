@@ -42,6 +42,9 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    alias: {
+      fetch: path.join('../node_modules', 'whatwg-fetch', 'fetch.js')
+    }
   }
 };

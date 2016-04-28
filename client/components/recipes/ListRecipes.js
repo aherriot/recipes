@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
-export default class Login extends Component {
+export default class ListRecipes extends Component {
 
   componentWillMount() {
 

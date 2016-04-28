@@ -24,3 +24,14 @@ export function getHeaders() {
 
   return headers;
 }
+
+
+export function request(url, method='GET', body=undefined) {
+  return fetch('/api' + url, {
+    method: method,
+    headers: getHeaders(),
+    body: JSON.stringify(body)
+  })
+  .then(checkHttpStatus)
+  .then(parseJSON);
+}
