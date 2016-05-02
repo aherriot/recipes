@@ -59,12 +59,12 @@ api.post('/login', function(req, res){
     if (err) throw err;
 
     if (!user) {
-      res.status(401).json({message: 'Authentication failed. User not found.' });
+      res.status(401).json({error: 'Authentication failed. User not found.' });
     } else if (user) {
 
       // check if password matches
       if (user.password != req.body.password) {
-        res.status(401).json({message: 'Authentication failed. Wrong password.' });
+        res.status(401).json({error: 'Authentication failed. Wrong password.' });
       } else {
 
         // if user is found and password is right
@@ -108,7 +108,12 @@ api.post('/users', function(req, res) {
 
   user.save(function(err) {
     if (err) throw err;
-    res.json(user);
+
+    var token = jwt.sign({user_id: user._id}, secret, {
+      expiresIn: 86400
+    });
+
+    res.json({user: user, token: token});
   });
 });
 
@@ -128,7 +133,7 @@ api.get('/recipes/:recipe_id', function(req, res) {
   Recipe.findById(req.params.recipe_id, function(err, recipe) {
     if (err) {
       if(err.name === 'CastError') {
-        res.status(404).json({message: "Recipe not found"});
+        res.status(404).json({error: "Recipe not found"});
       } else {
         return res.status(500).send(err);
       }
@@ -137,7 +142,7 @@ api.get('/recipes/:recipe_id', function(req, res) {
     if (recipe) {
       res.json(recipe);
     } else {
-      res.status(404).json({message: "Recipe not found"});
+      res.status(404).json({error: "Recipe not found"});
     }
   });
 });
@@ -148,7 +153,7 @@ api.put('/recipes/:recipe_id', function(req, res) {
 
     if (err) {
       if(err.name === 'CastError') {
-        res.status(404).json({message: "Recipe not found"});
+        res.status(404).json({error: "Recipe not found"});
       } else {
         return res.status(500).send(err);
       }
@@ -164,15 +169,21 @@ api.put('/recipes/:recipe_id', function(req, res) {
         recipe.description = req.body.description;
       }
 
-      recipe.save(function(err) {
-        if (err)
-          res.status(500).send(err);
+      if(recipe.username === req.user.username || req.user.admin) {
 
-        res.json(recipe);
-      });
+        recipe.save(function(err) {
+
+          if (err) {res.status(500).send(err);}
+
+          res.json(recipe);
+        });
+
+      } else {
+        res.status(401).json({error: 'Cannot delete another user\'s recipe'});
+      }
 
     } else {
-      res.status(404).json({message: "Recipe not found"});
+      res.status(404).json({error: "Recipe not found"});
     }
   });
 });
@@ -187,6 +198,7 @@ api.post('/recipes', function(req, res) {
   var recipe = new Recipe();
 
   recipe.user_id = req.user._id;
+  recipe.username = req.user.username;
   recipe.title = req.body.title;
   recipe.description = req.body.description;
 
@@ -201,11 +213,26 @@ api.post('/recipes', function(req, res) {
 
 // Delete a recipe
 api.delete('/recipes/:recipe_id', function(req, res) {
-  Recipe.findByIdAndRemove(req.params.recipe_id, function(err) {
-    if (err)
-      res.send(err);
+  Recipe.findById(req.params.recipe_id, function(err, recipe) {
 
-    res.json({message: 'Recipe Deleted'});
+    if (err) {
+      if(err.name === 'CastError') {
+        return res.status(404).json({error: "Recipe not found"});
+      } else {
+        return res.status(500).send(err);
+      }
+    }
+
+    if(recipe.username === req.user.username || req.user.admin) {
+      recipe.remove(function() {
+        return res.json({message: 'Recipe Deleted'});
+      });
+    } else {
+      console.log(recipe);
+      console.log(req.user);
+      return res.status(401).json({error: 'Cannot delete another user\'s recipe'});
+    }
+
   });
 });
 
@@ -238,7 +265,7 @@ api.get('/getData/', function(req, res) {
 })
 
 api.all('*', function(req, res) {
-  res.status(404).json({message: 'path not found'});
+  res.status(404).json({error: 'path not found'});
 });
 
 module.exports = api;

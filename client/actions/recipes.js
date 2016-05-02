@@ -3,7 +3,6 @@ import { checkHttpStatus, parseJSON, getHeaders, request } from '../utils';
 import { push } from 'react-router-redux';
 import { logoutAndRedirect }  from './auth';
 
-
 function fetchRecipesPending() {
   return {
     type: actionTypes.FETCH_RECIPES_PENDING
@@ -64,7 +63,9 @@ function fetchRecipeError(error) {
 
 export function fetchRecipe(recipe_id) {
   return function(dispatch) {
+
     dispatch(fetchRecipePending());
+
     return request('/recipes/' + recipe_id)
     .then(response => {
       dispatch(fetchRecipeSuccess(response));
@@ -83,18 +84,21 @@ function addRecipePending() {
 
 function addRecipeSuccess(response) {
   return {
-    type: actionTypes.ADD_RECIPE_SUCCESS
+    type: actionTypes.ADD_RECIPE_SUCCESS,
+    payload: response
   };
 }
 
 function addRecipeError(error) {
   return {
-    type: actionTypes.ADD_RECIPE_ERROR
+    type: actionTypes.ADD_RECIPE_ERROR,
+    payload: error
   };
 }
 
 export function addRecipe(title, description) {
   return function(dispatch) {
+
     dispatch(addRecipePending());
 
     return request('/recipes', 'POST', {
@@ -117,9 +121,10 @@ function editRecipePending() {
   };
 }
 
-function editRecipeSuccess() {
+function editRecipeSuccess(response) {
   return {
-    type: actionTypes.EDIT_RECIPE_SUCCESS
+    type: actionTypes.EDIT_RECIPE_SUCCESS,
+    payload: response
   };
 }
 
@@ -132,7 +137,9 @@ function editRecipeError(error) {
 
 export function editRecipe(recipe_id, title, description) {
   return function(dispatch) {
+
     dispatch(editRecipePending());
+
     request('/recipes/'+recipe_id, 'PUT', {title, description})
     .then(response => {
       dispatch(editRecipeSuccess());
@@ -165,7 +172,9 @@ function deleteRecipeError(error) {
 
 export function deleteRecipe(recipe_id) {
   return function(dispatch) {
+
     dispatch(deleteRecipePending());
+
     request('/recipes/'+recipe_id, 'DELETE')
     .then(response => {
       dispatch(deleteRecipeSuccess());

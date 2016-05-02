@@ -7,7 +7,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.join(__dirname, 'client/index.js')
+    path.join(__dirname, 'client/index.jsx')
   ],
   output: {
     publicPath: '/',
@@ -42,10 +42,10 @@ module.exports = {
       loader: 'json'
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[hash:base64:5]!postcss')
-    }],
-    resolve: {
-      extensions: ['', '.js', '.jsx']
-    }
+      loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[hash:base64:5]')
+    }]
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
   }
 };

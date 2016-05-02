@@ -6,7 +6,7 @@ export default class NewRecipe extends Component {
 
   onSubmit = (title, description) => {
 
-    this.props.actions.addRecipe(title, description);
+    // this.props.actions.addRecipe(title, description);
   }
 
   render() {

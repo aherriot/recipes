@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
+import statuses from '../../constants/statuses';
+
 export default class Recipe extends Component {
 
   componentWillMount() {
-    // only if the recipe is not already loaded, fetch it.
-    // if(this.props.recipes.recipeDetail._id !== this.props.params.recipe_id) {
-      this.props.actions.fetchRecipe(this.props.params.recipe_id);
-    // }
+
+    this.props.actions.fetchRecipe(this.props.params.recipe_id);
   }
 
   onEdit = () => {
@@ -22,16 +22,48 @@ export default class Recipe extends Component {
 
   render() {
 
-    const recipe = this.props.recipes.recipeDetail;
+    const {status, recipeDetail, error } = this.props.recipes;
+    let recipeContent;
+
+    if(status === statuses.ERROR) {
+      recipeContent = (
+        <div>
+          {error}
+        </div>
+      );
+    } else if(status === statuses.PENDING) {
+      recipeContent = (
+        <div>
+          Loading...
+        </div>
+      );
+    } else if(status === statuses.SUCCESS) {
+
+      let buttons;
+      if(this.props.auth.username === recipeDetail.username) {
+        buttons = (
+          <div>
+            <button onClick={this.onEdit}>Edit</button>
+            <button onClick={this.onDelete}>Delete!</button>
+          </div>
+        );
+      }
+
+      recipeContent = (
+        <div>
+          <p>Posted by: {recipeDetail.username}</p>
+          <h3>{recipeDetail.title}</h3>
+          <p>{recipeDetail.description}</p>
+          {buttons}
+        </div>
+      );
+
+    }
 
     return (
       <div>
         <h2>Recipe</h2>
-        <h3>{recipe.title}</h3>
-        <p>{recipe.description}</p>
-        <button onClick={this.onEdit}>Edit</button>
-        <button onClick={this.onDelete}>Delete!</button>
-
+        {recipeContent}
       </div>
     );
   }

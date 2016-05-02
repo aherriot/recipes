@@ -8,7 +8,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=false&path=/__webpack_hmr',
-    path.join(__dirname, 'client/index.js')
+    path.join(__dirname, 'client/index.jsx')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -42,9 +42,6 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      fetch: path.join('../node_modules', 'whatwg-fetch', 'fetch.js')
-    }
+    extensions: ['', '.js', '.jsx']
   }
 };

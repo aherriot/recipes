@@ -16,7 +16,6 @@ import RecipeContainer from './containers/recipes/RecipeContainer';
 import NewRecipeContainer from './containers/recipes/NewRecipeContainer';
 import EditRecipeContainer from './containers/recipes/EditRecipeContainer';
 
-
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 

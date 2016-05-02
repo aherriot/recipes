@@ -7,7 +7,10 @@ import Recipe from '../../components/recipes/Recipe';
 import {fetchRecipe, deleteRecipe} from '../../actions/recipes';
 
 function mapStateToProps(state) {
-  return {recipes: state.recipes};
+  return {
+    recipes: state.recipes,
+    auth: state.auth
+  };
 }
 
 function mapDispatchToProps(dispatch) {

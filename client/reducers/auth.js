@@ -24,10 +24,28 @@ export default function auth(state = defaultState, action) {
     };
 
   case actionTypes.LOGOUT:
-    return {
+    return {...state,
       username: undefined,
       token: undefined
     };
+
+  case actionTypes.CREATE_ACCOUNT_PENDING:
+    return {...state
+
+    };
+
+  case actionTypes.CREATE_ACCOUNT_SUCCESS:
+    return {
+      username: action.payload.username,
+      token: action.payload.token
+    };
+
+  case actionTypes.CREATE_ACCOUNT_ERROR:
+    return {...state,
+      username: undefined,
+      token: undefined
+    };
+
   default:
     return state;
   }

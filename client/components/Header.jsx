@@ -19,7 +19,7 @@ export default class App extends Component {
     } else {
       authSection = (
         <div>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Login</Link><br />
           <Link to="/createAccount">Create Account</Link>
         </div>
       );

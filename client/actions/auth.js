@@ -38,13 +38,47 @@ export function loginPending() {
   }
 }
 
-export function createAccountSuccess(user) {
-  localStorage.setItem('token', user.token);
-  localStorage.setItem('username', user.username);
+export function login(username, password, redirect="/recipes") {
+    return function(dispatch) {
+        dispatch(loginPending());
+
+        return request('/login', 'POST', {
+          username: username,
+          password: password
+        })
+        .then(response => {
+          dispatch(loginSuccess(response));
+          dispatch(push(redirect));
+        })
+        .catch(error => {
+          dispatch(loginError(error));
+        })
+    }
+}
+
+export function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    return {
+        type: actionTypes.LOGOUT
+    }
+}
+
+export function logoutAndRedirect(redirect = '/login') {
+    return (dispatch, state) => {
+        dispatch(logout());
+        dispatch(push(redirect));
+    }
+}
+
+export function createAccountSuccess(username, token) {
+  localStorage.setItem('token', token);
+  localStorage.setItem('username', username);
 
   return {
     type: actionTypes.CREATE_ACCOUNT_SUCCESS,
     payload: {
+      username: username,
       token: token
     }
   }
@@ -68,40 +102,7 @@ export function createAccountPending() {
   }
 }
 
-export function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    return {
-        type: actionTypes.LOGOUT
-    }
-}
-
-export function logoutAndRedirect(redirect = '/login') {
-    return (dispatch, state) => {
-        dispatch(logout());
-        dispatch(push(redirect));
-    }
-}
-
-export function login(username, password, redirect="/recipes") {
-    return function(dispatch) {
-        dispatch(loginPending());
-
-        return request('/login', 'POST', {
-          username: username,
-          password: password
-        })
-        .then(response => {
-          dispatch(loginSuccess(response));
-          dispatch(push(redirect));
-        })
-        .catch(error => {
-          dispatch(loginError(error));
-        })
-    }
-}
-
-export function createAccount(username, password, redirect="/") {
+export function createAccount(username, password, redirect="/recipes") {
     return function(dispatch) {
         dispatch(createAccountPending());
         return request('/users', 'POST', {
@@ -109,17 +110,8 @@ export function createAccount(username, password, redirect="/") {
           password: password
         })
         .then(response => {
-            try {
-                dispatch(createAccountSuccess(response.token));
-                dispatch(push(redirect));
-            } catch (e) {
-                dispatch(createAccountFailure({
-                    response: {
-                        status: 403,
-                        statusText: 'Invalid token'
-                    }
-                }));
-            }
+          dispatch(createAccountSuccess(response.user.username, response.token));
+          dispatch(push(redirect));
         })
         .catch(error => {
             dispatch(createAccountFailure(error));

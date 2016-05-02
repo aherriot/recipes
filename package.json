@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "babel-node server/devServer",
-    "build": "rimraf dist && webpack --config ./webpack.build.config.js --progress --profile --colors",
+    "build": "rimraf dist && webpack --display-error-details --config ./webpack.build.config.js --progress --profile --colors",
     "eslint": "eslint ."
   },
   "keywords": [
@@ -40,7 +40,7 @@
     "redux": "^3.4.0",
     "redux-devtools": "^3.2.0",
     "redux-devtools-dock-monitor": "^1.1.1",
-    "redux-devtools-inspector": "^0.3.4",
+    "redux-devtools-inspector": "^0.5.0",
     "redux-devtools-log-monitor": "^1.0.9",
     "redux-thunk": "^2.0.1",
     "rimraf": "^2.5.2",
