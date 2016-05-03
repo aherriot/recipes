@@ -110,7 +110,7 @@ export function addRecipe(title, description) {
       dispatch(push('/recipes'));
     })
     .catch(error => {
-        dispatch(addRecipeFailure(error));
+        dispatch(addRecipeError(error));
     })
   }
 }
@@ -142,7 +142,7 @@ export function editRecipe(recipe_id, title, description) {
 
     request('/recipes/'+recipe_id, 'PUT', {title, description})
     .then(response => {
-      dispatch(editRecipeSuccess());
+      dispatch(editRecipeSuccess(response));
       dispatch(push('/recipes'));
     })
     .catch(error => {

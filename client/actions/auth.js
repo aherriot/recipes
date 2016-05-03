@@ -13,8 +13,7 @@ export function loginSuccess(user) {
     type: actionTypes.LOGIN_SUCCESS,
     payload: {
       username: user.username,
-      token: user.token,
-      test: true
+      token: user.token
     }
   }
 }

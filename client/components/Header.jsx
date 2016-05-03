@@ -8,7 +8,9 @@ export default class App extends Component {
   }
 
   render() {
+
     let authSection;
+    
     if(this.props.auth.username) {
       authSection = (
         <div>
