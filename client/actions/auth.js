@@ -47,7 +47,7 @@ export function login(username, password, redirect="/recipes") {
         })
         .then(response => {
           dispatch(loginSuccess(response));
-          dispatch(push(redirect));
+          // dispatch(push(redirect));
         })
         .catch(error => {
           dispatch(loginError(error));

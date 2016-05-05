@@ -29,7 +29,7 @@ export default class ListRecipes extends Component {
         </div>
       );
     } else if(status === statuses.SUCCESS) {
-      
+
       recipeContent = recipes.map((recipe) => {
         return (
           <div key={recipe._id}>
