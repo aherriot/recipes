@@ -8,7 +8,7 @@ import {addRecipe} from '../../actions/recipes';
 
 function mapStateToProps(state) {
   return {
-    auth: state.recipes,
+    auth: state.auth,
     recipes: state.recipes
   };
 }

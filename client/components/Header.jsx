@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
 export default class App extends Component {
 
   onLogout = () => {
@@ -10,27 +13,30 @@ export default class App extends Component {
   render() {
 
     let authSection;
-    
+
     if(this.props.auth.username) {
       authSection = (
         <div>
-          <div>Logged in as: {this.props.auth.username}</div>
-          <a href="#" onClick={this.onLogout}>Logout</a>
+          <span>Logged in as: {this.props.auth.username}</span>
+          <a href="#" onClick={this.onLogout}><FlatButton label="Logout"/></a>
         </div>
       );
     } else {
       authSection = (
         <div>
-          <Link to="/login">Login</Link><br />
-          <Link to="/createAccount">Create Account</Link>
+          <Link to="/login"><FlatButton label="Login"/></Link>
+          <Link to="/createAccount"><FlatButton label="Create Account"/></Link>
         </div>
       );
     }
 
+    const title = <Link to="/recipes"><FlatButton label="NOKIA - RECIPES"></FlatButton></Link>
+
     return (
       <div>
-        <h1>Recipes</h1>
-        {authSection}
+        <AppBar title={title}>
+            {authSection}
+        </AppBar>
       </div>
     );
 

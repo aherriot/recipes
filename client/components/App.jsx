@@ -1,9 +1,28 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
-import styles from './App.css';
+import {deepOrange500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import styles from './App.css';
 import HeaderContainer from '../containers/HeaderContainer';
+
+
+// const styles = {
+//   container: {
+//     textAlign: 'center',
+//     paddingTop: 200,
+//   },
+// };
+
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500,
+  },
+});
+
+
 
 export default class App extends Component {
   constructor(props) {
@@ -12,13 +31,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <HeaderContainer />
-        <p>
-          <Link to="/recipes">Recipes</Link>
-        </p>
-        {this.props.children}
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <HeaderContainer />
+          {this.props.children}
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

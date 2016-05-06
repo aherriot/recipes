@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 export default class Login extends Component {
 
   onLogin = (e) => {
     e.preventDefault();
-    this.props.actions.login(this.refs.username.value, this.refs.password.value);
+    this.props.actions.login(this.refs.username.getValue(), this.refs.password.getValue());
   }
 
   onLogout = (e) => {
@@ -20,15 +22,17 @@ export default class Login extends Component {
       content = (
         <div>
           <p>You are logged in as {this.props.auth.username}.</p>
-          <p><a href="#" onClick={this.onLogout}>Logout</a></p>
+          <div>
+            <RaisedButton label="Logout" primary={true} onClick={this.onLogout} />
+          </div>
         </div>
       );
     } else {
       content = (
         <form onSubmit={this.onLogin}>
-          <input type="text" ref="username" placeholder="username" />
-          <input type="password" ref="password" placeholder="password" />
-          <input type="submit" value="Login" />
+          <TextField hintText="username" ref="username"/> <br/>
+          <TextField type="password" hintText="password" ref="password"/> <br/>
+          <RaisedButton type="submit" label="Login" primary={true} />
         </form>
       );
     }
@@ -37,6 +41,7 @@ export default class Login extends Component {
       <div>
         <h2>Login</h2>
         {content}
+
       </div>
     );
   }

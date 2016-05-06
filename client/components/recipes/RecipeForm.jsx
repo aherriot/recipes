@@ -1,23 +1,22 @@
 import React, { PropTypes, Component } from 'react'
 
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
 class RecipeForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.onSubmit(this.refs.title.value, this.refs.description.value);
+    this.props.onSubmit(this.refs.title.getValue(), this.refs.description.getValue());
   }
   render () {
     return (
       <form onSubmit={this.onSubmit}>
-        <label htmlFor="title">Title</label>
+        <TextField ref="title" hintText="Title" defaultValue={this.props.title} />
         <br />
-        <input id="title" type="text" ref="title" defaultValue={this.props.title}></input>
+        <TextField ref="description" hintText="Description" defaultValue={this.props.description} multiLine={true}/>
         <br />
-        <label htmlFor="description">Description</label>
-        <br />
-        <textarea id="description" ref="description" defaultValue={this.props.description}></textarea>
-        <br />
-        <input type="submit" value="Save"></input>
+        <RaisedButton type="submit" label="Save" primary={true}/>
       </form>
     );
   }

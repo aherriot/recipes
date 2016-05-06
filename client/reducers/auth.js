@@ -1,7 +1,5 @@
 import actionTypes from '../constants/actionTypes';
 
-
-
 const defaultState = {
   username: localStorage.getItem('username'),
   token: localStorage.getItem('token')

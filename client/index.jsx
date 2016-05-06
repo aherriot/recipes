@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import { Provider } from 'react-redux';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import configureStore from './store';
 
@@ -15,6 +16,9 @@ import ListRecipesContainer from './containers/recipes/ListRecipesContainer';
 import RecipeContainer from './containers/recipes/RecipeContainer';
 import NewRecipeContainer from './containers/recipes/NewRecipeContainer';
 import EditRecipeContainer from './containers/recipes/EditRecipeContainer';
+
+//Needed for onTouchTap in material-ui, will go away in future versions.
+injectTapEventPlugin();
 
 const store = configureStore(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);

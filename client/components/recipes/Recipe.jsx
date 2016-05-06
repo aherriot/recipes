@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
+import RaisedButton from 'material-ui/RaisedButton';
+
 import statuses from '../../constants/statuses';
 
 export default class Recipe extends Component {
@@ -43,17 +45,19 @@ export default class Recipe extends Component {
       if(this.props.auth.username === recipeDetail.username) {
         buttons = (
           <div>
-            <button onClick={this.onEdit}>Edit</button>
-            <button onClick={this.onDelete}>Delete!</button>
+            <RaisedButton onClick={this.onEdit} label="Edit" primary={true}/>
+            <RaisedButton onClick={this.onDelete} label="Delete" secondary={true}/>
+
           </div>
         );
       }
 
       recipeContent = (
         <div>
-          <p>Posted by: {recipeDetail.username}</p>
           <h3>{recipeDetail.title}</h3>
           <p>{recipeDetail.description}</p>
+          <p>Posted by: {recipeDetail.username}</p>
+
           {buttons}
         </div>
       );
@@ -62,7 +66,6 @@ export default class Recipe extends Component {
 
     return (
       <div>
-        <h2>Recipe</h2>
         {recipeContent}
       </div>
     );
