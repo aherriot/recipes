@@ -135,6 +135,18 @@ function editRecipeError(error) {
   };
 }
 
+export function startEditRecipe() {
+  return {
+    type: actionTypes.START_EDIT_RECIPE
+  }
+}
+
+export function revertRecipe() {
+  return {
+    type: actionTypes.REVERT_RECIPE
+  }
+}
+
 export function editRecipe(recipe_id, title, description) {
   return function(dispatch) {
 
@@ -143,7 +155,6 @@ export function editRecipe(recipe_id, title, description) {
     request('/recipes/'+recipe_id, 'PUT', {title, description})
     .then(response => {
       dispatch(editRecipeSuccess(response));
-      dispatch(push('/recipes'));
     })
     .catch(error => {
         dispatch(editRecipeError(error));

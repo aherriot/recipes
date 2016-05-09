@@ -38,34 +38,16 @@ export default class ListRecipes extends Component {
       );
     } else if(status === statuses.SUCCESS) {
 
-      recipeContent = (
-        <GridList cellHeight={200} cols={3}>
-          {recipes.map(recipe => (
-            <GridTile
-              key={recipe._id}
-              title={recipe.title}
-            >
-
-            </GridTile>
-          ))}
-
-        </GridList>
-      )
-      // recipeContent = recipes.map((recipe) => {
-      //   return (
-      //     <div key={recipe._id}>
-      //       <Link to={`/recipes/${recipe._id}`}>
-      //       <Card>
-      //         <CardHeader
-      //           title={recipe.title}
-      //         />
-      //         <CardText>{recipe.description}</CardText>
-      //       </Card>
-      //       </Link>
-      //
-      //     </div>
-      //   );
-      // });
+      recipeContent = recipes.map(recipe =>
+          <div key={recipe._id}>
+            <Card>
+              <CardHeader
+                title={<Link to={`/recipes/${recipe._id}`}>{recipe.title}</Link>}
+              />
+              <CardText>{recipe.description}</CardText>
+            </Card>
+          </div>
+      );
     }
 
     return (

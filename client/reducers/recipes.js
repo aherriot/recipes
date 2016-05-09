@@ -59,6 +59,15 @@ export default function auth(state = defaultState, action) {
     };
 
     //Edit
+  case actionTypes.START_EDIT_RECIPE:
+    return {...state,
+      status: statuses.EDITING
+    };
+
+  case actionTypes.REVERT_RECIPE:
+    return {...state,
+      status: statuses.SUCCESS
+    };
   case actionTypes.EDIT_RECIPE_PENDING:
     return {...state,
       status: statuses.PENDING

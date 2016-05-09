@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 
 
 import Recipe from '../../components/recipes/Recipe';
-import {fetchRecipe, deleteRecipe} from '../../actions/recipes';
+import {fetchRecipe, deleteRecipe, startEditRecipe, editRecipe, revertRecipe} from '../../actions/recipes';
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +15,14 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators({fetchRecipe, deleteRecipe, push}, dispatch)
+    actions: bindActionCreators({
+      fetchRecipe,
+      deleteRecipe,
+      startEditRecipe,
+      editRecipe,
+      revertRecipe,
+      push
+    }, dispatch)
   };
 }
 

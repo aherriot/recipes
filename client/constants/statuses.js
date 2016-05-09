@@ -2,5 +2,6 @@ export default {
   INIT: 'INIT',
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
+  EDITING: 'EDITING',
   ERROR: 'ERROR'
 };

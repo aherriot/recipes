@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-
 import RaisedButton from 'material-ui/RaisedButton';
-
 import statuses from '../../constants/statuses';
+import RecipeForm from './RecipeForm';
 
 export default class Recipe extends Component {
 
   componentWillMount() {
-
     this.props.actions.fetchRecipe(this.props.params.recipe_id);
   }
 
   onEdit = () => {
-    this.props.actions.push(`/recipes/${this.props.params.recipe_id}/edit`);
+    this.props.actions.startEditRecipe();
+    // this.props.actions.push(`/recipes/${this.props.params.recipe_id}/edit`);
   }
 
   onDelete = () => {
@@ -22,19 +21,26 @@ export default class Recipe extends Component {
     }
   }
 
+  onRevert = () => {
+    this.props.actions.revertRecipe();
+  }
+
+  onSubmit = (title, description) => {
+    this.props.actions.editRecipe(this.props.params.recipe_id, title, description);
+  }
+
   render() {
 
-    const {status, recipeDetail, error } = this.props.recipes;
-    let recipeContent;
+    const {status, recipeDetail, error, editing } = this.props.recipes;
 
     if(status === statuses.ERROR) {
-      recipeContent = (
+      return (
         <div>
           {error}
         </div>
       );
     } else if(status === statuses.PENDING) {
-      recipeContent = (
+      return (
         <div>
           Loading...
         </div>
@@ -52,7 +58,7 @@ export default class Recipe extends Component {
         );
       }
 
-      recipeContent = (
+      return (
         <div>
           <h3>{recipeDetail.title}</h3>
           <p>{recipeDetail.description}</p>
@@ -62,12 +68,19 @@ export default class Recipe extends Component {
         </div>
       );
 
+    } else if(status === statuses.EDITING) {
+      return (
+        <div>
+          <RecipeForm
+            onSubmit={this.onSubmit}
+            title={recipeDetail.title}
+            description={recipeDetail.description}
+          />
+          <br />
+          <RaisedButton onClick={this.onRevert} label="Revert" />
+          <RaisedButton onClick={this.onDelete} label="Delete" secondary={true}/>
+        </div>
+      );
     }
-
-    return (
-      <div>
-        {recipeContent}
-      </div>
-    );
   }
 }

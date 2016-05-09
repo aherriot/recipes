@@ -15,7 +15,6 @@ import CreateAccountContainer from './containers/CreateAccountContainer';
 import ListRecipesContainer from './containers/recipes/ListRecipesContainer';
 import RecipeContainer from './containers/recipes/RecipeContainer';
 import NewRecipeContainer from './containers/recipes/NewRecipeContainer';
-import EditRecipeContainer from './containers/recipes/EditRecipeContainer';
 
 //Needed for onTouchTap in material-ui, will go away in future versions.
 injectTapEventPlugin();
@@ -33,7 +32,6 @@ ReactDOM.render(
 
           <Route path="/recipes" component={ListRecipesContainer} />
           <Route path="/recipes/new" component={NewRecipeContainer} />
-          <Route path="/recipes/:recipe_id/edit" component={EditRecipeContainer} />
           <Route path="/recipes/:recipe_id" component={RecipeContainer} />
 
           <Route path="*" component={NoMatch}/>
