@@ -1,6 +1,16 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+
+const styles = {
+  login: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: '100px'
+  }
+}
 
 export default class Login extends Component {
 
@@ -22,6 +32,7 @@ export default class Login extends Component {
       content = (
         <div>
           <p>You are logged in as {this.props.auth.username}.</p>
+          <p>It's <Link to="/recipes">recipe</Link> time!</p>
           <div>
             <RaisedButton label="Logout" primary={true} onClick={this.onLogout} />
           </div>
@@ -38,10 +49,11 @@ export default class Login extends Component {
     }
 
     return (
-      <div>
-        <h2>Login</h2>
+      <div style={styles.login}>
+        <div>
+          <h2>Login!</h2>
+        </div>
         {content}
-
       </div>
     );
   }

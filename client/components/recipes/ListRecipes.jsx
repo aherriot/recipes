@@ -6,9 +6,7 @@ import Card from 'material-ui/Card/Card';
 import CardHeader from 'material-ui/Card/CardHeader';
 import CardText from 'material-ui/Card/CardText';
 
-import GridList from 'material-ui/GridList/GridList';
-import GridTile from 'material-ui/GridList/GridTile';
-
+import AppToolbar from '../AppToolbar';
 import statuses from '../../constants/statuses';
 
 export default class ListRecipes extends Component {
@@ -19,11 +17,9 @@ export default class ListRecipes extends Component {
   }
 
   render() {
-
     const {status, recipes, error } = this.props.recipes;
 
     let recipeContent;
-
     if(status === statuses.ERROR) {
       recipeContent = (
         <div>

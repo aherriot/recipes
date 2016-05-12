@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 
-import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import styles from './App.css';
 import HeaderContainer from '../containers/HeaderContainer';
-
 
 // const styles = {
 //   container: {
@@ -18,8 +16,11 @@ import HeaderContainer from '../containers/HeaderContainer';
 
 const muiTheme = getMuiTheme({
   palette: {
-    accent1Color: deepOrange500,
+    primary1Color: '#1b4499',
   },
+  flatButton: {
+    textColor: '#ffffff'
+  }
 });
 
 

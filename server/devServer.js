@@ -30,13 +30,14 @@ app.use(middleware);
 app.use(webpackHotMiddleware(compiler));
 app.use('/api', api);
 
+app.use(express.static('client/static'));
+
 app.get('*', function response(req, res) {
   res.write(middleware.fileSystem.readFileSync(path.join(__dirname, '../dist/index.html')));
   res.end();
 });
 
-
-app.listen(config.PORT, function onStart(err) {
+app.listen(config.PORT, function(err) {
   if (err) {
     console.log(err);
   }

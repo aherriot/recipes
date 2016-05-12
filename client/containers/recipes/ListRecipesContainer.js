@@ -5,7 +5,10 @@ import Recipes from '../../components/recipes/ListRecipes';
 import {fetchRecipes} from '../../actions/recipes';
 
 function mapStateToProps(state) {
-  return {recipes: state.recipes};
+  return {
+    auth: state.auth,
+    recipes: state.recipes
+  };
 }
 
 function mapDispatchToProps(dispatch) {

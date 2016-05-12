@@ -30,7 +30,6 @@ export default class Recipe extends Component {
   }
 
   render() {
-
     const {status, recipeDetail, error, editing } = this.props.recipes;
 
     if(status === statuses.ERROR) {
@@ -39,7 +38,7 @@ export default class Recipe extends Component {
           {error}
         </div>
       );
-    } else if(status === statuses.PENDING) {
+    } else if(status === statuses.PENDING || status === statuses.INIT) {
       return (
         <div>
           Loading...
@@ -77,8 +76,7 @@ export default class Recipe extends Component {
             description={recipeDetail.description}
           />
           <br />
-          <RaisedButton onClick={this.onRevert} label="Revert" />
-          <RaisedButton onClick={this.onDelete} label="Delete" secondary={true}/>
+          <RaisedButton onClick={this.onRevert} label="Revert" secondary={true}/>
         </div>
       );
     }

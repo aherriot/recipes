@@ -1,7 +1,7 @@
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import Header from '../components/Header';
+import AppBanner from '../components/AppBanner';
 import {logoutAndRedirect} from '../actions/auth';
 
 function mapStateToProps(state) {
@@ -17,4 +17,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Header);
+)(AppBanner);

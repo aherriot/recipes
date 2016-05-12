@@ -3,6 +3,15 @@ import React, {Component} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+const styles = {
+  createAccount: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: '100px'
+  }
+}
+
 export default class CreateAccount extends Component {
 
   onCreateAccount = (e) => {
@@ -16,7 +25,7 @@ export default class CreateAccount extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.createAccount}>
         <h2>Create Account</h2>
         <form onSubmit={this.onCreateAccount}>
 
