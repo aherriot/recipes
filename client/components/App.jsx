@@ -7,12 +7,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import styles from './App.css';
 import HeaderContainer from '../containers/HeaderContainer';
 
-// const styles = {
-//   container: {
-//     textAlign: 'center',
-//     paddingTop: 200,
-//   },
-// };
 
 const muiTheme = getMuiTheme({
   palette: {

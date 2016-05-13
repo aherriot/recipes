@@ -83,25 +83,10 @@ export default class AppBanner extends Component {
     }
   }
 
-  onClick = (e) => {
-    //if you click on it, stop and ignore the hover timer.
-    window.clearTimeout(this.hoverTimer);
-
-    //ignoring pinning if we are click on a button
-    if(e.target.parentNode.parentNode.type === 'button' || e.target.parentNode.tagName === 'A') {
-      return;
-    }
-
-    if(this.state.pinned) {
-      this.setState({pinned: false, expanded: false});
-    } else {
-      this.setState({pinned: true});
-    }
-  }
-
   onMouseEnter = () => {
-    window.clearTimeout(this.hoverTimer);
-    this.hoverTimer = window.setTimeout(this.hoverTimerFinished, 1600);
+    if(!this.state.pinned) {
+      this.hoverTimer = window.setTimeout(this.hoverTimerFinished, 1600);
+    }
   }
 
   onMouseLeave = () => {
@@ -111,6 +96,22 @@ export default class AppBanner extends Component {
 
   hoverTimerFinished = () => {
     this.setState({hovering: true});
+  }
+
+  onClick = (e) => {
+    //if you click on it, stop and ignore the hover timer.
+    window.clearTimeout(this.hoverTimer);
+
+    //ignore pinning if we are clicking on a button
+    if(e.target.parentNode.parentNode.type === 'button' || e.target.parentNode.tagName === 'A') {
+      return;
+    }
+
+    if(this.state.pinned) {
+      this.setState({pinned: false, expanded: false});
+    } else {
+      this.setState({pinned: true});
+    }
   }
 
   render() {

@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+import statuses from '../../constants/statuses';
+
 const styles = {
   login: {
     display: 'flex',
@@ -26,9 +28,15 @@ export default class Login extends Component {
 
   render() {
 
-    let content;
+    let error;
+    if(this.props.auth.status === statuses.ERROR) {
+      error = <p>{this.props.auth.error}</p>;
+    }
 
-    if(this.props.auth.username) {
+    let content;
+    if(this.props.auth.status === statuses.PENDING) {
+      content = <p>Pending login.</p>
+    } else if(this.props.auth.username) {
       content = (
         <div>
           <p>You are logged in as {this.props.auth.username}.</p>
@@ -51,8 +59,9 @@ export default class Login extends Component {
     return (
       <div style={styles.login}>
         <div>
-          <h2>Login!</h2>
+          <h2>Login</h2>
         </div>
+        {error}
         {content}
       </div>
     );

@@ -21,12 +21,10 @@ export function loginSuccess(user) {
 export function loginError(error) {
   localStorage.removeItem('token');
   localStorage.removeItem('username');
-
   return {
     type: actionTypes.LOGIN_ERROR,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      error: error
     }
   }
 }
@@ -50,7 +48,11 @@ export function login(username, password, redirect="/recipes") {
           // dispatch(push(redirect));
         })
         .catch(error => {
-          dispatch(loginError(error));
+
+          error.response.json().then(data => {
+            dispatch(loginError(data.error));
+          });
+
         })
     }
 }

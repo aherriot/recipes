@@ -5,7 +5,7 @@ const defaultState = {
   status: statuses.INIT,
   recipes: [],
   recipeDetail: {},
-  error: null
+  error: undefined
 }
 
 export default function auth(state = defaultState, action) {

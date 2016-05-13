@@ -1,0 +1,59 @@
+{
+ "monitorState": {},
+ "actionsById": {
+  "0": {
+   "type": "PERFORM_ACTION",
+   "action": {
+    "type": "@@INIT"
+   },
+   "timestamp": 1463146711161
+  },
+  "1": {
+   "type": "PERFORM_ACTION",
+   "action": {
+    "type": "@@router/LOCATION_CHANGE",
+    "payload": {
+     "pathname": "/login",
+     "search": "",
+     "hash": "",
+     "state": null,
+     "action": "POP",
+     "key": "laurgj",
+     "query": {},
+     "$searchBase": {
+      "search": "",
+      "searchBase": ""
+     }
+    }
+   },
+   "timestamp": 1463146711166
+  },
+  "2": {
+   "type": "PERFORM_ACTION",
+   "action": {
+    "type": "LOGIN_PENDING"
+   },
+   "timestamp": 1463146717759
+  },
+  "3": {
+   "type": "PERFORM_ACTION",
+   "action": {
+    "type": "LOGIN_ERROR",
+    "payload": {
+     "error": "Authentication failed. Wrong password."
+    }
+   },
+   "timestamp": 1463146717819
+  }
+ },
+ "nextActionId": 4,
+ "stagedActionIds": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "skippedActionIds": [],
+ "computedStates": [],
+ "currentStateIndex": 3
+}
